@@ -94,6 +94,15 @@ groups:
     plugins:
       - com.stiltsoft.confluence.plugin.tablefilter.tablefilter
 
+  scroll-k15t:
+    name: "Scroll - K15T"
+    description: "Scroll - K15T"
+    plugins:
+      - k15t-scroll-document-versions-for-confluence
+      - com.k15t.scroll.scroll-exporter-extensions
+      - com.k15t.scroll.scroll-pdf
+      - com.k15t.scroll.scroll-runtime-confluence
+      - com.k15t.scroll.scroll-viewport
   # Add more groups as need ed
 
 # Individual Plugins (not in groups)
