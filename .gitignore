@@ -70,3 +70,7 @@ credentials/
 *.backup
 *~
 
+# Temporary plugin extraction directories
+temp_jira_plugin/
+temp_*_plugin/
+
