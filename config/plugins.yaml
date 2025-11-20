@@ -1,0 +1,103 @@
+# Plugin Configuration
+# Define plugins and plugin groups for fetching translation keys
+
+# Plugin Groups - Collections of related plugins
+groups:
+  linchpin-suite:
+    name: "Linchpin Suite"
+    description: "All Linchpin Suite plugins"
+    plugins:
+      - net.seibertmedia.confluence.language-manager
+      - net.seibertmedia.confluence.linchpin-connector
+      - net.seibertmedia.confluence.enterprise-news-bundle
+      - net.seibertmedia.plugin.confluence.event-manager
+      - net.seibertmedia.confluence.linchpin-suite
+      - net.seibertmedia.confluence.appcenter
+      - net.seibertmedia.plugin.confluence.linchpin-management
+      - net.seibertmedia.confluence.linchpin-assistant
+      - net.seibertmedia.confluence.linchpin-onboarding
+      - net.seibertmedia.linchpin-mobile
+      - net.seibertmedia.confluence.linchpin-news-digest
+      - net.seibertmedia.confluence.profile-based-content
+      - net.seibertmedia.confluence.plugins.linchpin-theme
+      - net.seibertmedia.confluence.plugins.custom-landing-spaces
+      - net.seibertmedia.confluence.plugin.menuEditor
+      - net.seibertmedia.confluence.linchpin-sidebar
+      - net.seibertmedia.confluence.linchpin-login
+      - net.seibertmedia.confluence.space-directory
+      - net.seibertmedia.confluence.linchpin-touch
+      - net.seibertmedia.confluence.i18n-editor
+      - net.seibertmedia.plugin.confluence.cup
+      - net.seibertmedia.confluence.content-responsibility
+      - net.seibertmedia.confluence.linchpin-iconfont
+      - net.seibertmedia.plugin.confluence.microblog
+      - net.seibertmedia.confluence.plugin.termsofuse-plugin
+
+  requirements-yogi:
+    name: "Requirements Yogi"
+    description: "Requirements Yogi plugin"
+    plugins:
+      - com.playsql.requirementyogi
+
+  comala-workflow:
+    name: "Comala Document Management"
+    description: "Comala Document Management plugin"
+    plugins:
+      - com.comalatech.workflow
+
+  scaffolding:
+    name: "Scaffolding"
+    description: "Customware Scaffolding plugin"
+    plugins:
+      - net.customware.confluence.plugin.scaffolding
+
+  aura:
+    name: "Aura"
+    description: "AppAnvil Aura plugin"
+    plugins:
+      - com.appanvil.aura.aura
+
+  page-tree-creator:
+    name: "Page Tree Creator"
+    description: "FocusPro Page Tree Creator plugins"
+    plugins:
+      - eps.focuspro.PageTreeCreator
+      - eps.focuspro.TreeCreatorPersistence
+
+  blueprint-creator:
+    name: "Blueprint Creator"
+    description: "Create blueprints with an easy-to-use editor that requires no programming skills."
+    plugins:
+      - net.junovi.confluence.blueprint-creator
+
+  handy-macros:
+    name: "Handy Macros for Confluence"
+    description: "Handy Macros for Confluence"
+    plugins:
+      - com.stiltsoft.confluence.handy.macros
+
+  script-runner:
+    name: "Adaptavist ScriptRunner for Confluence"
+    description: "Adaptavist ScriptRunner for Confluence"
+    plugins:
+      - com.onresolve.confluence.groovy.groovyrunner
+
+  team-files:
+    name: "Team Files"
+    description: "Team Files"
+    plugins:
+      - cloud-files-google-drive-docs-office-365-documents-dropbox-topdox-for-confluence
+
+  tables-charts:
+    name: "Tables & Charts"
+    description: "Tables & Charts"
+    plugins:
+      - com.stiltsoft.confluence.plugin.tablefilter.tablefilter
+
+  # Add more groups as need ed
+
+# Individual Plugins (not in groups)
+# plugins:
+#   - com.atlassian.confluence.plugins.confluence-wiki-editor
+#   - com.example.some-plugin
+

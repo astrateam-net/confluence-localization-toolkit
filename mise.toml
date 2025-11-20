@@ -1,0 +1,9 @@
+[tools]
+python = "3.12.3"
+just = "latest"
+
+[env]
+# Automatic virtual environment activation
+# Creates venv if it doesn't exist
+_.python.venv = { path = "venv", create = true }
+

@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv
+
+# Database
+db/
+*.db
+*.db-journal
+
+# Output files
+output/*.jar
+output/*.properties
+output/extracted/
+
+# Data files (can be large)
+data/*.json
+
+# Raw API responses (keep directory structure, ignore JSON files)
+raw_data/*
+!raw_data/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Google Cloud credentials
+credentials/
+*.json.credentials
+*credentials*.json
+*-*-*.json
+*service-account*.json
+*service_account*.json
+
+# API keys and tokens (any location)
+*.key
+*.token
+*.secret
+*.pem
+
+# Backup files that might contain sensitive data
+*.bak
+*.backup
+*~
+
