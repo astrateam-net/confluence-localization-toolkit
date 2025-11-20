@@ -258,31 +258,45 @@ just translate <group-name> --google-api-version v2
 
 ### 4. Export Translations
 
-Export Russian translations to Java properties file:
+Export translated keys to Java properties file:
 
+```bash
+just export-group <group-name>
+# Example: just export-group linchpin-suite
+```
+
+- Only exports keys with `status='translated'`
+- Automatically converts Cyrillic to Unicode escapes (`\uXXXX` format) for Cyrillic languages
+- Output file: `output/{group-name}/{group-name}_{TARGET_LANGUAGE}.properties`
+- Uses `TARGET_LANGUAGE` environment variable (defaults to `ru_RU`)
+
+**Manual export** (specify custom output file):
 ```bash
 just export <group-name> <output-file>
 # Example: just export linchpin-suite output/linchpin-suite_ru_RU.properties
 ```
-
-- Only exports keys with `status='translated'`
-- Automatically converts Cyrillic to Unicode escapes (`\uXXXX` format)
-- Ready for JAR packaging
 
 ### 5. Package as JAR
 
 Create Confluence plugin JAR package:
 
 ```bash
+just package-group <group-name> <version>
+# Example: just package-group linchpin-suite 1.0.0
+```
+
+- Automatically finds properties file: `output/{group-name}/{group-name}_{TARGET_LANGUAGE}.properties`
+- Output JAR: `output/{group-name}/{group-name}-i18n-pack-{version}.jar`
+
+**Manual package** (specify custom paths):
+```bash
 just package <group-name> <properties-file> <version>
 # Example: just package linchpin-suite output/linchpin-suite_ru_RU.properties 1.0.0
 ```
 
-Creates: `output/{group}-pack-{version}.jar`
-
-Contains:
+**JAR Contents:**
 - `atlassian-plugin.xml` (plugin descriptor)
-- Properties file in correct path structure
+- Properties file in correct path structure: `net/seibertmedia/confluence/language/i18n/i18n_{locale}.properties`
 
 ## Configuration
 
@@ -325,10 +339,12 @@ just translate <group> --google-api-version v3  # Use Google v3
 just translate <group> --google-api-version v2  # Use Google v2
 
 # Export
-just export <group> <output>    # Export to properties file
+just export-group <group>       # Export to properties file (auto path)
+just export <group> <output>    # Export to custom output file
 
 # Package
-just package <group> <properties> <version>  # Create JAR
+just package-group <group> <version>  # Create JAR (auto path)
+just package <group> <properties> <version>  # Create JAR (manual path)
 
 # Database operations
 just db-stats                   # Show group statistics
@@ -339,7 +355,144 @@ just check-env                  # Check environment variables
 just unicode-convert <file> <mode>  # Convert Unicode
 
 # Complete workflow
-just workflow-group <group>     # Complete workflow for a group
+just workflow-group <group> <version>  # Complete workflow for a group
+```
+
+## Examples
+
+### Complete Workflow for a New Group
+
+```bash
+# 1. Fetch translation keys from Confluence
+just fetch linchpin-suite --yes
+
+# 2. Import JSON to database (find latest file)
+ls -t raw_data/linchpin-suite_*.json | head -1 | xargs -I {} just import-group {} linchpin-suite
+
+# 3. Translate pending keys
+just translate linchpin-suite --google-api-version v3
+
+# 4. Export translated keys to properties file
+just export-group linchpin-suite
+
+# 5. Package as JAR
+just package-group linchpin-suite 1.0.0
+
+# Or use the complete workflow command (does all steps above)
+just workflow-group linchpin-suite 1.0.0 --google-api-version v3
+```
+
+### Fetch and Import
+
+```bash
+# Fetch keys for a specific group
+just fetch scroll-k15t --yes
+
+# Fetch keys for a single plugin (alternative)
+just fetch-plugin com.k15t.scroll.scroll-viewport
+
+# Import latest JSON file for a group
+just import-group raw_data/scroll-k15t_20251120_071851.json scroll-k15t
+
+# Or automatically find and import latest file
+ls -t raw_data/scroll-k15t_*.json | head -1 | xargs -I {} just import-group {} scroll-k15t
+```
+
+### Translation Examples
+
+```bash
+# Translate using auto-detected service (DeepL or Google)
+just translate linchpin-suite
+
+# Force Google Cloud Translation v3
+just translate linchpin-suite --google-api-version v3
+
+# Force Google Cloud Translation v2
+just translate linchpin-suite --google-api-version v2
+
+# Force DeepL (set environment variable)
+TRANSLATION_SERVICE=deepl just translate linchpin-suite
+
+# Translate with custom target language
+TARGET_LANGUAGE=de_DE just translate linchpin-suite --google-api-version v3
+```
+
+### Export and Package
+
+```bash
+# Export to auto-generated path (uses TARGET_LANGUAGE)
+just export-group linchpin-suite
+# Creates: output/linchpin-suite/linchpin-suite_ru_RU.properties
+
+# Export to custom path
+just export linchpin-suite output/custom/custom-linchpin.properties
+
+# Package with auto-generated paths
+just package-group linchpin-suite 1.0.0
+# Creates: output/linchpin-suite/linchpin-suite-i18n-pack-1.0.0.jar
+
+# Package with custom paths
+just package linchpin-suite output/linchpin-suite/linchpin-suite_ru_RU.properties 2.0.0
+```
+
+### Database Operations
+
+```bash
+# Check statistics for all groups
+just db-stats
+
+# Check statistics for a specific group
+python src/db_group_manager.py --stats linchpin-suite
+
+# List all registered groups
+just db-list
+
+# View pending translations count
+python src/db_group_manager.py --stats linchpin-suite | grep pending
+```
+
+### Multi-Language Examples
+
+```bash
+# Set target language for German
+export TARGET_LANGUAGE=de_DE
+
+# Complete workflow for German translations
+just workflow-group linchpin-suite 1.0.0 --google-api-version v3
+# Exports: output/linchpin-suite/linchpin-suite_de_DE.properties
+# Creates: output/linchpin-suite/linchpin-suite-i18n-pack-1.0.0.jar
+
+# Set target language for French
+export TARGET_LANGUAGE=fr_FR
+just translate linchpin-suite --google-api-version v3
+just export-group linchpin-suite
+just package-group linchpin-suite 1.0.0
+```
+
+### Common Workflows
+
+**Quick retranslate and repackage:**
+```bash
+# If translations exist but need updating
+just translate linchpin-suite --google-api-version v3
+just export-group linchpin-suite
+just package-group linchpin-suite 1.1.0
+```
+
+**Check translation progress:**
+```bash
+# See how many keys are translated
+python src/db_group_manager.py --stats linchpin-suite
+
+# Then translate pending keys
+just translate linchpin-suite --google-api-version v3
+```
+
+**Import existing translations:**
+```bash
+# Import from existing JSON file (filters by target language)
+just import-translations raw_data/linchpin-suite_20251120_004135.json linchpin-suite
+# Automatically filters and imports only Russian (or TARGET_LANGUAGE) translations
 ```
 
 ## Database Operations

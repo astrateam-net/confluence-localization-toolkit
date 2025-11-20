@@ -103,6 +103,26 @@ groups:
       - com.k15t.scroll.scroll-pdf
       - com.k15t.scroll.scroll-runtime-confluence
       - com.k15t.scroll.scroll-viewport
+
+  reporting:
+    name: "Reporting"
+    description: "Reporting"
+    plugins:
+      - net.customware.confluence.plugin.reporting
+
+  swagger-ui:
+    name: "Numbered Headings"
+    description: "Embed Swagger UI directly into your Confluence page."
+    plugins:
+      - com.confluence.swagger.api.document
+
+  source-editor:
+    name: "Source Editor"
+    description: "Source Editor"
+    plugins:
+      - com.itlab.confluence.plugins.source-editor
+
+
   # Add more groups as need ed
 
 # Individual Plugins (not in groups)
