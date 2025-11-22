@@ -119,7 +119,7 @@
     "bigpicture.program.create.structure.title": "Как бы вы хотели структурировать данные?",
     "bigpicture.program.create.success.info": "Вы только что создали новую программу:",
     "bigpicture.program.create.validation.error": "Ошибки проверки",
-    "bigpicture.program.dialog.delete.confirm": "Вы уверены, что хотите удалить программу?{0} ?",
+    "bigpicture.program.dialog.delete.confirm": "Вы уверены, что хотите удалить программу {0}?",
     "bigpicture.program.dialog.delete.error": "Не удалось удалить программу.",
     "bigpicture.program.dialog.delete.success": "Программа успешно удалена.",
     "bigpicture.program.form.header.createFromFilter": "Создать программу из существующего фильтра, используя &quot;{0} &quot; предустановка",

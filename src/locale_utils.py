@@ -35,6 +35,25 @@ def get_target_locale() -> str:
     return os.getenv('TARGET_LANGUAGE', DEFAULT_LOCALE).strip()
 
 
+def locale_to_jira_format(locale: str = None) -> str:
+    """
+    Convert locale format from ru_RU (underscore) to ru-RU (hyphen) for Jira properties files.
+    
+    Jira uses hyphens in properties filenames (e.g., message_en-US.properties, message_de-DE.properties).
+    
+    Args:
+        locale: Locale code (e.g., 'ru_RU'). If None, reads from TARGET_LANGUAGE env var.
+    
+    Returns:
+        Locale in Jira format (e.g., 'ru-RU')
+    """
+    if locale is None:
+        locale = get_target_locale()
+    
+    # Convert underscore to hyphen
+    return locale.replace('_', '-')
+
+
 def get_locale_info(locale: str = None) -> dict:
     """
     Get locale information including language codes for different APIs.
