@@ -122,6 +122,12 @@ groups:
     plugins:
       - com.itlab.confluence.plugins.source-editor
 
+  bpmn-modeler:
+    name: "BPMN Modeler"
+    description: "BPMN Modeler Enterprise"
+    plugins:
+      - de.viadee.confluence.bpmn-plugin-enterprise
+
 
   # Add more groups as need ed
 
